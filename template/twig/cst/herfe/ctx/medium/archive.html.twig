@@ -1,0 +1,31 @@
+{% set row_class = 'mb-6' %}
+{% set main_order = 2 %}
+{% extends get_cover_template('sidebarable') %}
+
+{% block sidebar %}
+    {{ parent() }}
+    {% if pmpr_apply_filters('can_show_sidebar_magazine_list', 1) %}
+        {% include get_template('../../magazines', _self) %}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+
+    {% embed get_cover_template('common/header/index') with {
+        nowrap: 1,
+        has_container: 0,
+    } %}
+        {% block after_title %}
+            {{ pmpr_do_action('browser_render', {
+                items: pmpr_apply_filters('magazine_archive_browser_items', []),
+                taxonomy: 'medium',
+            }) }}
+        {% endblock %}
+    {% endembed %}
+
+    {% include get_cover_template('common/archive/content') with {
+        posts: have_posts(),
+        lg_col: 4,
+    } %}
+{% endblock %}
+

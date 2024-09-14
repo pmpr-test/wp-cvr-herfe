@@ -1,0 +1,3 @@
+{% include get_cover_template('common/pagination') with {
+    pagination: pmpr_apply_filters('get_' ~ pagination_type|default('post') ~ '_pagination', '', pagination_args|default({}))
+} %}

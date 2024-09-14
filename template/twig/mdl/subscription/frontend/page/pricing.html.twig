@@ -1,0 +1,21 @@
+{% extends get_cover_template('container') %}
+
+{% block before_container %}
+    <header class="container text-center my-15">
+        {{ render_if_has_content('h1', {class: 'mb-5'}, title) }}
+        {{ render_if_has_content('div', {}, wpautop(description)) }}
+    </header>
+{% endblock %}
+
+{% block inside_container %}
+
+    {{ 'woocommerce_output_all_notices'|call() }}
+
+    <div class="my-5">
+        {% include get_template('../plans', _self) with {plans: plans} %}
+    </div>
+
+    {% include get_cover_template('common/single/content') %}
+
+{% endblock %}
+

@@ -1,0 +1,51 @@
+{% extends get_template('container', _self) %}
+
+{% block before_container %}
+    {{ parent() }}
+    {% include get_cover_template('common/header/index') %}
+    <div class="my-6 bg-gray-3">
+        <div class="container py-10">
+            <div class="row">
+                <div class="col-12 col-lg-6">
+                    {{ get_search_form()|raw }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block inside_container %}
+
+    {% set type = 'post' %}
+    {% set items = get_search_result() %}
+    {% if items %}
+
+        <div class="row my-6">
+            {% for index, item in items %}
+
+                {% if is_term(item) %}
+
+                    {% set type = 'term' %}
+                    {% include get_cover_template('common/term/block') with {
+                        term: item,
+                        loop: loop,
+                        show_type: 0
+                    } %}
+                {% elseif is_post(item) %}
+
+                    {% include get_cover_template('common/post/block') with {
+                        post: item,
+                        loop: loop,
+                        show_type: 0
+                    } %}
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        {% include get_cover_template('common/archive/pagination') %}
+    {% else %}
+
+        {% include get_cover_template('common/archive/empty') %}
+    {% endif %}
+
+{% endblock %}

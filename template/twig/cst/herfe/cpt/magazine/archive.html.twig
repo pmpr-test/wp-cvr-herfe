@@ -1,0 +1,26 @@
+{% set main_order = 2 %}
+{% set row_class = 'mb-6' %}
+{% extends get_cover_template('sidebarable') %}
+
+{% block sidebar %}
+    {{ parent() }}
+    {% include get_template('../../magazines', _self) %}
+{% endblock %}
+
+{% block content %}
+
+    {% embed get_cover_template('common/header/index') with {
+        nowrap: 1,
+        has_container: 0,
+        title_attrs: {class: 'text-nowrap'}
+    } %}
+        {% block after_title %}
+            {{ pmpr_do_action('browser_render', {
+                items: pmpr_apply_filters('magazine_archive_browser_items', []),
+                taxonomy: 'medium',
+            }) }}
+        {% endblock %}
+    {% endembed %}
+
+{% endblock %}
+
