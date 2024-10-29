@@ -1,7 +1,7 @@
 <?php
 /*   _______________________________________
     |  Obfuscated by PMPR - Php Obfuscator  |
-    |             671fc06044c94             |
+    |             6720b6c19c25c             |
     |_______________________________________|
 */
  namespace Pmpr\Cover\Herfe\Navigation\Walker; use Pmpr\Common\Cover\Navigation\Walker as BaseClass; class Walker extends BaseClass { }
