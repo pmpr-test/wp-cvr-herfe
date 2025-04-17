@@ -1,7 +1,7 @@
 <?php
 /*   _______________________________________
     |  Obfuscated by PMPR - Php Obfuscator  |
-    |             678a9fdf1fbfc             |
+    |             6800f6f1d2847             |
     |_______________________________________|
 */
- namespace Pmpr\Cover\Herfe\Page; class Team extends AbstractAbout { public function __construct() { $this->slug = "\164\x65\x61\x6d"; $this->parent = About::symcgieuakksimmu(); parent::__construct(); } public function gogaagekwoisaqgu() { $this->title = __("\124\145\x61\x6d", PR__CVR__HERFE); } }
+ namespace Pmpr\Cover\Herfe\Page; class Team extends AbstractAbout { public function __construct() { $this->slug = 'team'; $this->parent = About::symcgieuakksimmu(); parent::__construct(); } public function gogaagekwoisaqgu() { $this->title = __('Team', PR__CVR__HERFE); } }
