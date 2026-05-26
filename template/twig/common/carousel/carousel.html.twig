@@ -13,6 +13,7 @@
             or carousel_config.arrows %}
             {% block carousel_arrow %}
                 {% include get_template('arrows', _self) with {
+                    icon_class: arrow_icon_class,
                     btn_class: arrow_class,
                     class: arrows_class,
                     icon: arrow_icon,

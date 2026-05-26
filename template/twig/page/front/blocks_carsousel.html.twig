@@ -1,0 +1,44 @@
+<div class="container position-relative">
+    {% embed get_cover_template('common/carousel/swiper/index') with {
+        swiper_class: 'dont-hide four-slide-carousel',
+        nav_class: 'bg-primary icon-white p-1 icon-xl',
+        navs_class: 'centered-absolute w-100 z-index-1 d-flex justify-content-between',
+        breakpoints: {'': 1, sm: 2, lg: 3, xl: 4},
+        add_relative_class: 0,
+        carousel_config: {
+            loop: false,
+            autoplay: false,
+            equalHeight: true,
+            spaceBetween: 20,
+            navigation: true,
+            pagination: false,
+            centeredSlides: false,
+        }
+    } %}
+        {% block carousel %}
+            {% set type = carousel.type|default(get_post_type(carousel.ID)) %}
+            <article class="block-{{ carousel.type|esc_attr }} position-relative h-100">
+                <a href="{{ carousel.permalink|esc_url }}" aria-label="{{ carousel.title|esc_attr }}"
+                   title="{{ carousel.title|esc_attr }}" class="stretched-link"></a>
+                <figure class="mb-0">
+                    {{ wp_get_attachment_image(carousel.thumbnail, 'medium', {class: 'w-100'})|raw }}
+                </figure>
+                <div class="position-relative">
+                    <div class="w-100 position-absolute bottom-0 bg-overlay primary-70">
+                        {{ render_if_has_content('h3', {class: 'fs-sm font-weight-normal lh-xl text-white max-line max-line-2 p-3 mb-0'}, carousel.title) }}
+                    </div>
+                </div>
+            </article>
+        {% endblock %}
+{#        {% block after_last_slide %}#}
+{#            <div class="card bg-primary position-relative h-100">#}
+{#                <div class="card-body d-flex flex-column justify-content-center">#}
+{#                    <a class="stretched-link h4 mx-auto text-white" href="{{ action_link|esc_attr }}" aria-label="{{ action_text|esc_attr }}">#}
+{#                        {{ action_text|raw }}#}
+{#                    </a>#}
+{#                    {{ render_icon(view_all_icon, {class: 'icon-xl icon-white w-100 justify-content-center'}, 1) }}#}
+{#                </div>#}
+{#            </div>#}
+{#        {% endblock %}#}
+    {% endembed %}
+</div>

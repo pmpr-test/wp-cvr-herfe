@@ -1,0 +1,11 @@
+<div class="container">
+    {% set is_monile = is_mobile() %}
+    <a class="d-block" href="{{ link|esc_attr }}" target="_blank"
+       title="{{ title|esc_attr }}" aria-label="{{ title|esc_attr }}"
+       rel="nofollow noopener noreferrer">
+        <figure class="mb-0{% if not is_mobile %} responsive{% endif %}">
+            {{ wp_get_attachment_image(is_mobile ? mobile_image : desktop_image , is_mobile ? 'medium' : 'full', {class: 'w-100'})|raw }}
+        </figure>
+    </a>
+</div>
+

@@ -1,0 +1,71 @@
+{% set as_js_template = as_js_template|default(0) %}
+{%- if carousels or as_js_template %}
+
+    {{ pmpr_do_action('pmpr_swiper_added') }}
+
+    {% set carousel_config = carousel_config|default({}) %}
+
+    {% set carousel_config = pmpr_apply_filters('swiper_configuration', carousel_config, _context) %}
+    <div class="swiper-container{% if add_relative_class|default(1) %} position-relative{% endif %} {{ container_class|raw }}">
+        <div class="swiper{% if dont_hide %} dont-hide{% endif %} {{ swiper_class|raw }}"
+                {% if carousel_config is defined %} data-carousel="{{ carousel_config|json_encode }}"{% endif %}
+                {% if carousel_id is defined %} id="{{ carousel_id|esc_attr }}"{% endif %}>
+            {% block before_slides %}{% endblock %}
+            <div class="swiper-wrapper {{ wrapper_class|esc_attr }}">
+                {% if as_js_template %}
+                    {% if block('js_before_first_slide') is not empty %}
+                        <div class="swiper-slide {{ slide_class|raw }}">
+                            {% block js_before_first_slide %}{% endblock %}
+                        </div>
+                    {% endif %}
+                    {% verbatim %}{{#items}}{% endverbatim %}
+                    <div class="swiper-slide {{ slide_class|raw }}">
+                        {% block js_carousel %}{% endblock %}
+                    </div>
+                    {% verbatim %}{{/items}}{% endverbatim %}
+                    {% if block('js_after_last_slide') is not empty %}
+                        <div class="swiper-slide {{ slide_class|raw }}">
+                            {% block js_after_last_slide %}{% endblock %}
+                        </div>
+                    {% endif %}
+                {% else %}
+                    {% for key, carousel in carousels %}
+                        {% if loop.first and block('before_first_slide') is not empty %}
+                            <div class="swiper-slide {{ slide_class|raw }}">
+                                {% block before_first_slide %}{% endblock %}
+                            </div>
+                        {% endif %}
+                        <div class="swiper-slide {{ slide_class|raw }}">
+                            {% block carousel %}{% endblock %}
+                        </div>
+                        {% if loop.last and block('after_last_slide') is not empty %}
+                            <div class="swiper-slide {{ slide_class|raw }}">
+                                {% block after_last_slide %}{% endblock %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </div>
+            {% block after_slides %}{% endblock %}
+        </div>
+
+        {% if carousel_config.navigation %}
+            {% block carousel_navigation %}
+                {% include get_template('navigation', _self) with {
+                    btn_class: nav_class,
+                    icon_attrs: nav_icon_attrs,
+                    class: navs_class,
+                    icon: nav_icon,
+                } %}
+            {% endblock %}
+        {% endif %}
+
+        {% if carousel_config.pagination %}
+            {% block carousel_pagination %}
+                {% include get_template('pagination', _self) with {
+                    class: pagination_class
+                } %}
+            {% endblock %}
+        {% endif %}
+    </div>
+{% endif -%}
